@@ -19,12 +19,12 @@ def steepest_descent(Q: np.ndarray, b: np.ndarray, c: float) -> np.ndarray:
         raise ValueError("Q must be a 2x2 matrix")
     if b.ndim != 2 or b.shape != (2, 1):
         raise ValueError("b must be a 2x1 matrix")
-    x_0 = np.zeros((2, 1))
     x_min = np.zeros((2, 1))
 
     print(f":::::Steepest Gradient Descent Algorithm::::::::")
 
     for i in range(1, 10):
+        x_0 = x_min
         g_k = np.dot(Q, x_0) - b
         try:
             alpha_k = np.dot(g_k.T, g_k) / np.dot(np.dot(g_k.T, Q), g_k)
