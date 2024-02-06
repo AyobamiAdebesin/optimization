@@ -25,7 +25,6 @@ def steepest_descent(Q: np.ndarray, b: np.ndarray, c: float) -> np.ndarray:
     print(f":::::Steepest Gradient Descent Algorithm::::::::")
 
     for i in range(1, 10):
-        x_0 = x_min
         g_k = np.dot(Q, x_0) - b
         try:
             alpha_k = np.dot(g_k.T, g_k) / np.dot(np.dot(g_k.T, Q), g_k)
