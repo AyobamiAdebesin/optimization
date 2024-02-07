@@ -4,6 +4,7 @@ import os
 import matplotlib.pyplot as plt
 from numpy.linalg import eig, LinAlgError
 from typing import Tuple, Sequence, List, Union
+from conjugate_gradient_descent import conjugate_gradient
 from steepest_descent import steepest_descent
 
 
@@ -21,7 +22,7 @@ def least_squares(data_points: Sequence[Tuple]) -> Tuple:
     b = 2*np.dot(A.T, B)
     c = np.dot(B.T, B)
     try:
-        x_min = steepest_descent(Q, b, c,)
+        x_min = conjugate_gradient(Q, b, c,)
     except Exception as err:
         print(
             f"Error while calculating gradient descent::::Error message: {err}")
