@@ -5,6 +5,7 @@ import numpy as np
 import math
 from typing import Tuple, Sequence, List
 from numpy.linalg import eig, inv, norm, LinAlgError
+from exact_minimizer_solver import exact_minimizer
 
 
 def steepest_descent(Q: np.ndarray, b: np.ndarray, c: float) -> np.ndarray:
@@ -40,10 +41,6 @@ def steepest_descent(Q: np.ndarray, b: np.ndarray, c: float) -> np.ndarray:
         if norm((x_min - x_0), 2) < 1e-4:
             break
     print(f"Approximate minimizer: {x_min}")
-    try:
-        x = np.dot(inv(Q), b)
-    except LinAlgError as err:
-        print(f"Unable to find inverse of Q:::::: Error message: {err}")
-        return
+    x = exact_minimizer(Q, b)
     print(f"Exact minimizer: {x}")
     return x_min
