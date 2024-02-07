@@ -4,6 +4,8 @@ import numpy as np
 import os
 import shutil
 
+from exact_minimizer_solver import exact_minimizer
+
 
 def conjugate_gradient(Q: np.ndarray, b: np.ndarray, c: float) -> None:
     """
@@ -22,12 +24,13 @@ def conjugate_gradient(Q: np.ndarray, b: np.ndarray, c: float) -> None:
     try:
         alpha_0 = np.dot(g_0.T, g_0) / np.dot(g_0.T, np.dot(Q, g_0))
     except ZeroDivisionError:
-        print("Division by zero occured:::: Check that")
+        print("Division by zero occured:::: Check that gradient is not zero!")
+        return
     d_0 = -g_0
-    x_1 = x_0 + (alpha_0 * d_0)
+    x_min = x_0 + (alpha_0 * d_0)
 
-    for _ in range(len(Q)):
-        cur_pos = x_1
+    for _ in range(len(Q) - 1):
+        cur_pos = x_min
         cur_grad = np.dot(Q, cur_pos) - b
         prev_dir = d_0
         prev_beta = np.dot(cur_grad.T, np.dot(Q, prev_dir)) / \
@@ -35,5 +38,9 @@ def conjugate_gradient(Q: np.ndarray, b: np.ndarray, c: float) -> None:
         d_0 = -cur_grad + (prev_beta*prev_dir)
         alpha_k = -1 * np.dot(cur_grad.T, d_0) / \
             np.dot(d_0.T, np.dot(Q, d_0))
-        x_1 = cur_pos + (alpha_k * d_0)
-    return x_1
+        x_min = cur_pos + (alpha_k * d_0)
+    print(f"Approximate minimizer: {x_min}")
+    x = exact_minimizer(Q, b)
+    print(f"Exact minimizer: {x}")
+    return (x_min)
+
