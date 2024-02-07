@@ -8,6 +8,6 @@ from conjugate_gradient_descent import conjugate_gradient
 
 
 data_points = generate_synthetic_data()
-alpha, C = least_squares(data_points)
+alpha, C = least_squares(data_points, method="conjugate_gradient")
 print(f"C: {C}, alpha: {alpha}")
 plot_exp_points(data_points, alpha, C)
